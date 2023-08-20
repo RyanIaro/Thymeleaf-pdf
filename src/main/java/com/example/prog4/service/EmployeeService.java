@@ -10,6 +10,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -24,6 +25,7 @@ public class EmployeeService {
         return repository.findById(id).orElseThrow(() -> new NotFoundException("Not found id=" + id));
     }
 
+    @Transactional
     public List<Employee> getAll(EmployeeFilter filter) {
         Sort sort = Sort.by(filter.getOrderDirection(), filter.getOrderBy().toString());
         Pageable pageable = PageRequest.of(filter.getIntPage() - 1, filter.getIntPerPage(), sort);

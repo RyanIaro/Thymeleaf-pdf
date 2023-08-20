@@ -6,6 +6,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
@@ -76,15 +77,18 @@ public class Employee implements Serializable {
     @Enumerated(EnumType.STRING)
     @ColumnTransformer(read = "CAST(csp AS varchar)", write = "CAST(? AS csp)")
     private Csp csp;
-
-    @ManyToMany
+    
+    //When we access to the edit or show page it return a error 500: phones is loaded in laziest something like that
+    //the solution is to add a EAGER attribute, that means that the data phones for example will be load with the
+    //employee table when it is called.
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "have_position",
             joinColumns = @JoinColumn(name = "employee_id"),
             inverseJoinColumns = @JoinColumn(name = "position_id")
     )
     private List<Position> positions;
-    @OneToMany
+    @OneToMany(fetch = FetchType.EAGER)
     @JoinColumn(name = "employee_id", referencedColumnName = "id")
     private List<Phone> phones;
 }
