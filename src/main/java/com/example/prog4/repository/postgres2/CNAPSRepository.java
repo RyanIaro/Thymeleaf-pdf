@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface CNAPSRepository extends JpaRepository<CNAPSEmployee, String> {
+    CNAPSEmployee findCNAPSEmployeeByEndToEndId(String id);
 }

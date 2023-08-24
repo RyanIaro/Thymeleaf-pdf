@@ -51,8 +51,7 @@ public class EmployeeController {
     @PostMapping("/createOrUpdate")
     public String saveOne(@ModelAttribute Employee employee) {
         employeeValidator.validate(employee);
-        com.example.prog4.repository.postgres1.entity.Employee domain = employeeMapper.toDomain(employee);
-        employeeService.saveOne(domain);
+        employeeService.saveOne(employee);
         return "redirect:/employee/list";
     }
 }

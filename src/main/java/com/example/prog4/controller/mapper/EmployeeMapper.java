@@ -2,9 +2,11 @@ package com.example.prog4.controller.mapper;
 
 import com.example.prog4.model.Employee;
 import com.example.prog4.model.exception.BadRequestException;
+import com.example.prog4.repository.RepositoryImpl;
 import com.example.prog4.repository.postgres1.PositionRepository;
 import com.example.prog4.repository.postgres1.entity.Phone;
 import com.example.prog4.repository.postgres1.entity.Position;
+import com.example.prog4.repository.postgres2.CNAPSRepository;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -19,6 +21,7 @@ import java.util.Optional;
 @AllArgsConstructor
 @Transactional
 public class EmployeeMapper {
+    private CNAPSRepository repository;
     private PositionRepository positionRepository;
     private PhoneMapper phoneMapper;
 
@@ -42,7 +45,6 @@ public class EmployeeMapper {
                     .lastName(employee.getLastName())
                     .address(employee.getAddress())
                     .cin(employee.getCin())
-                    .cnaps(employee.getCnaps())
                     .registrationNumber(employee.getRegistrationNumber())
                     .childrenNumber(employee.getChildrenNumber())
                     // enums
@@ -78,7 +80,7 @@ public class EmployeeMapper {
                 .lastName(employee.getLastName())
                 .address(employee.getAddress())
                 .cin(employee.getCin())
-                .cnaps(employee.getCnaps())
+                .cnaps(repository.findCNAPSEmployeeByEndToEndId(employee.getId()).getCnaps())
                 .registrationNumber(employee.getRegistrationNumber())
                 .childrenNumber(employee.getChildrenNumber())
                 // enums
