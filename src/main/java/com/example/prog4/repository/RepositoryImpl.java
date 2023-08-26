@@ -51,8 +51,7 @@ public class RepositoryImpl implements com.example.prog4.repository.Repository {
 
     @Override
     public String getCnapsById(String idEmployee) {
-        CNAPSEmployee cnapsEmployee = cnapsRepository.findById(idEmployee)
-                .orElseThrow(() -> new NotFoundException("Not found id=" + idEmployee));
+        CNAPSEmployee cnapsEmployee = cnapsRepository.findCNAPSEmployeeByEndToEndId(idEmployee);
         return cnapsEmployee.getCnaps();
     }
 }
