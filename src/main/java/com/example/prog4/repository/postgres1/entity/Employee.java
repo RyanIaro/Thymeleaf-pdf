@@ -70,6 +70,8 @@ public class Employee implements Serializable {
     @Column(name = "children_number")
     private Integer childrenNumber;
 
+    private Float salary;
+
     @Enumerated(EnumType.STRING)
     @ColumnTransformer(read = "CAST(sex AS varchar)", write = "CAST(? AS sex)")
     private Sex sex;

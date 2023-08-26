@@ -32,6 +32,7 @@ public class Employee implements Serializable {
     private String cnaps;
     private String address;
     private Integer childrenNumber;
+    private Float salary;
     private String personalEmail;
     private String professionalEmail;
     private String registrationNumber;
