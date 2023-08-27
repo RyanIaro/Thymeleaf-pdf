@@ -12,6 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.time.Period;
 import java.util.List;
 
 @Data
@@ -46,4 +47,10 @@ public class Employee implements Serializable {
 
     private List<Position> positions;
     private List<Phone> phones;
+
+    public int getAge() {
+        LocalDate currentDate = LocalDate.now();
+        Period period = Period.between(this.birthDate, currentDate);
+        return period.getYears();
+    }
 }
