@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"></meta>
+    <meta name="viewport" content="width=device-width, initial-scale=1"></meta>
+    <title th:text="'Employee ' + ${employee.id}"></title>
+    <link rel="stylesheet" th:href="@{http://localhost:8080/styles/bootstrap.min.css}"></link>
+</head>
+<body>
+<div class="container">
+    <div class="row m-3">
+        <div class="col-3 offset-1">
+            <div class="">
+                <img th:src="${employee.stringImage}" class="mw-100" alt="no image" src=""></img>
+            </div>
+        </div>
+        <div class="col-5 offset-2">
+            <h2>Employee sheet</h2>
+            <div class="d-flex flex-row">
+                <label for="ref" >Employee Ref:</label>
+                <p id="ref" th:text="' '+*{employee.registrationNumber}" type="text"></p>
+            </div>
+            <div class="d-flex flex-row">
+                <label for="lastName" >Last name:</label>
+                <p id="lastName" th:text="' '+*{employee.lastName}" type="text"></p>
+            </div>
+            <div class="d-flex flex-row">
+                <label for="firstName">First name:</label>
+                <p id="firstName" th:text="' '+*{employee.firstName}" type="text"></p>
+            </div>
+            <div class="d-flex flex-row">
+                <label for="age">Age:</label>
+                <p id="age" th:text="' ' + *{employee.age} + ' years old'" type="number"></p>
+            </div>
+            <div class="d-flex flex-row">
+                <label for="entranceDate">Entrance date:</label>
+                <p id="entranceDate" th:text="' '+*{employee.entranceDate}" type="date"></p>
+            </div>
+            <div class="d-flex flex-row">
+                <label for="departureDate">Departure date:</label>
+                <p id="departureDate" th:text="' '+*{employee.departureDate}" type="date"></p>
+            </div>
+            <div class="d-flex flex-row">
+                <label for="cnaps">CNAPS number:</label>
+                <p id="cnaps" th:text="' '+${cnaps}" type="text"></p>
+            </div>
+        </div>
+    </div>
+    <div class="row m-5">
+        <h3>About salary</h3>
+        <div class="d-flex flex-row m-2">
+            <label for="salary">Salary:</label>
+            <p id="salary" type="number" th:text="' ' + *{employee.salary} + ' Ariary/month'"></p>
+        </div>
+    </div>
+    <div class="row m-5"></div>
+    <div class="row m-5"></div>
+    <div class="row m-5"></div>
+    <div class="row m-5"></div>
+    <hr></hr>
+    <footer class="row">
+        <div class="col-2 offset-1">
+            <img src="" th:src="${company.logo}" class="mw-100" alt="no image"></img>
+        </div>
+        <div class="col-3 offset-2">
+            <div class="d-flex flex-row">
+                <label for="companyName"><strong>Name:</strong></label>
+                <p id="companyName" th:text="' '+*{company.name}" type="text"></p>
+            </div>
+            <div class="d-flex flex-row">
+                <label for="nif"><strong>NIF:</strong></label>
+                <p id="nif" th:text="' '+*{company.taxIdentity.nif}" type="text"></p>
+            </div>
+            <div class="d-flex flex-row">
+                <label for="stat"><strong>STAT:</strong></label>
+                <p id="stat" th:text="' '+${company.taxIdentity.stat}" type="text"></p>
+            </div>
+        </div>
+        <div class="col-3">
+            <div class="d-flex flex-row">
+                <label for="companyAddress"><strong>Address:</strong></label>
+                <p id="companyAddress" th:text="' '+*{company.address}" type="text"></p>
+            </div>
+            <div>
+                <label><strong>Phone numbers:</strong></label>
+                <ul class="list-unstyled" th:each="phone : ${company.phones}">
+                    <li th:text="${phone.value}"></li>
+                </ul>
+            </div>
+            <div class="d-flex flex-row">
+                <label for="email"><strong>Email:</strong></label>
+                <p id="email" th:text="' '+*{company.email}" type="text"></p>
+            </div>
+        </div>
+    </footer>
+</div>
+
+</body>
+</html>
