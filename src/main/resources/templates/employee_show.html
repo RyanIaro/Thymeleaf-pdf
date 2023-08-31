@@ -13,6 +13,11 @@
     <div class="col-12 d-flex justify-content-start mb-5 align-items-center">
         <img th:src="${employee.stringImage}" alt="no image">
     </div>
+    <label for="ageParameter" class="form-label">Age calculation method</label>
+    <select id="ageParameter">
+        <option selected value="BIRTHDAY">Birthday</option>
+        <option value="YEAR_ONLY">Year only</option>
+    </select>
     <a th:href="@{/employee/show/{eId}/pdf(eId=${employee.id})}" target="_blank">Download a sheet as pdf</a>
     <div class="col-lg-3 col-md-4 col-sm-6 col-12">
         <label for="lastName" class="form-label text-black-50">Last name</label>

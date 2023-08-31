@@ -48,6 +48,7 @@ public class Employee implements Serializable {
     private List<Position> positions;
     private List<Phone> phones;
 
+    private int age;
     public int getAge() {
         LocalDate currentDate = LocalDate.now();
         Period period = Period.between(this.birthDate, currentDate);
