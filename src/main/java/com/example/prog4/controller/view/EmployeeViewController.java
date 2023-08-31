@@ -5,6 +5,7 @@ import com.example.prog4.controller.PopulateController;
 import com.example.prog4.controller.mapper.EmployeeMapper;
 import com.example.prog4.model.Employee;
 import com.example.prog4.model.EmployeeFilter;
+import com.example.prog4.model.enums.AgeParameter;
 import com.example.prog4.service.EmployeeService;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
@@ -16,12 +17,17 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 import org.xhtmlrenderer.pdf.ITextRenderer;
 
 import java.io.OutputStream;
 import java.io.StringWriter;
+import java.time.LocalDate;
+import java.time.Period;
+
+import static java.time.LocalDate.now;
 
 @Controller
 @RequestMapping("/employee")
@@ -76,16 +82,25 @@ public class EmployeeViewController extends PopulateController {
         return "redirect:/employee/list";
     }
 
-    @GetMapping("/show/{eId}/pdf")
-    public void generateEmployeePdf(@PathVariable String eId, HttpServletResponse response) throws Exception {
+    @GetMapping("/show/{eId}/{type}/pdf")
+    public void generateEmployeePdf(@PathVariable AgeParameter type, @PathVariable String eId, HttpServletResponse response) throws Exception {
         Employee employee = employeeMapper.toView(employeeService.getOne(eId));
         String cnaps = employeeService.getEmployeeCnaps(eId);
         CompanyConf company = new CompanyConf();
+
+        if (type == AgeParameter.BIRTHDAY) {
+            Period period = Period.between(employee.getBirthDate(), LocalDate.now());
+            employee.setAge(period.getYears());
+        } else if (type == AgeParameter.YEAR_ONLY) {
+            int year = LocalDate.now().getYear() - employee.getBirthDate().getYear();
+            employee.setAge(year);
+        }
 
         Context context = new Context();
         context.setVariable("employee", employee);
         context.setVariable("cnaps", cnaps);
         context.setVariable("company", company);
+        context.setVariable("type", type);
 
         StringWriter writer = new StringWriter();
         templateEngine.process("employee_pdf", context, writer);
